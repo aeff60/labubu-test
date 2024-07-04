@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>สั่งซื้อลาบูบู้</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        text-align: center;
+      }
+      .hidden {
+        display: none;
+      }
+      form {
+        max-width: 400px;
+        margin: 0 auto;
+        text-align: left;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+      }
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="queue-page">
+      <h1>กรุณารอสักครู่</h1>
+      <p>กำลังเตรียมหน้าสั่งซื้อ...</p>
+    </div>
+
+    <div id="order-form" class="hidden">
+      <h1>สั่งซื้อลาบูบู้</h1>
+      <form id="labu-form">
+        <label for="name">ชื่อ:</label>
+        <input type="text" id="name" required />
+
+        <label for="phone">เบอร์โทรศัพท์:</label>
+        <input type="tel" id="phone" required />
+
+        <label for="address">ที่อยู่จัดส่ง:</label>
+        <textarea id="address" required></textarea>
+
+        <label for="quantity">จำนวน:</label>
+        <input type="number" id="quantity" min="1" required />
+
+        <label for="rich-level">ความรวย:</label>
+        <select id="rich-level" required>
+          <option value="mild">น้อย</option>
+          <option value="medium">ปานกลาง</option>
+          <option value="high">มาก</option>
+        </select>
+
+        <button type="submit">สั่งซื้อ</button>
+      </form>
+    </div>
+
+    <div id="summary-page" class="hidden">
+      <h1>สรุปการสั่งซื้อ</h1>
+      <div id="order-summary"></div>
+      <h2>ช่องทางชำระเงิน</h2>
+      <p>โอนเงินไปที่บัญชี: XXX-X-XXXXX-X</p>
+      <p>ธนาคาร: ธนาคาร ABC</p>
+      <p>ชื่อบัญชี: ร้านลาบูบู้</p>
+    </div>
+
+    <script>
+      // หน้ารอคิว
+      setTimeout(() => {
+        document.getElementById("queue-page").classList.add("hidden");
+        document.getElementById("order-form").classList.remove("hidden");
+      }, 3000);
+
+      // จัดการการส่งฟอร์ม
+      document
+        .getElementById("labu-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const name = document.getElementById("name").value;
+          const phone = document.getElementById("phone").value;
+          const address = document.getElementById("address").value;
+          const quantity = document.getElementById("quantity").value;
+          const richLevel = document.getElementById("rich-level").value;
+
+          const summary = `
+                <p><strong>ชื่อ:</strong> ${name}</p>
+                <p><strong>เบอร์โทรศัพท์:</strong> ${phone}</p>
+                <p><strong>ที่อยู่จัดส่ง:</strong> ${address}</p>
+                <p><strong>จำนวน:</strong> ${quantity}</p>
+                <p><strong>ระดับความรวย:</strong> ${richLevel}</p>
+                <p><strong>ราคารวม:</strong> ${quantity * 50} บาท</p>
+            `;
+
+          document.getElementById("order-summary").innerHTML = summary;
+          document.getElementById("order-form").classList.add("hidden");
+          document.getElementById("summary-page").classList.remove("hidden");
+        });
+    </script>
+  </body>
+</html>
